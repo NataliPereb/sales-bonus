@@ -26,8 +26,9 @@ function calculateBonusByProfit(index, total, seller) {
     // @TODO: Расчет бонуса от позиции в рейтинге
     const { profit } = seller;
 
-    if (index === 0) {return 0.15} 
-    else if (index === 1 || index === 2) {
+    if (index === 0) {
+        return 0.15
+    } else if (index === 1 || index === 2) {
         return 0.1
     } else if (index === total - 1) {
         return 0
@@ -44,6 +45,7 @@ function calculateBonusByProfit(index, total, seller) {
  */
 function analyzeSalesData(data, options) {
     const { calculateRevenue, calculateBonus } = options;
+
     // @TODO: Проверка входных данных
     if (!data
         || !Array.isArray(data.sellers)
@@ -108,7 +110,7 @@ function analyzeSalesData(data, options) {
             const product = productIndex[item.sku]; // ТОвар 
 
             if (!product) {
-                console.log(`Товар с SKU ${item.skud} не найден для чека ${record.receipt_id}`)
+                console.log(`Товар с SKU ${item.sku} не найден для чека ${record.receipt_id}`)
             }
 
             //Посчитать себестоимость
@@ -124,7 +126,7 @@ function analyzeSalesData(data, options) {
             seller.profit += itemProfit
 
             // Учет количества проданных товаров 
-            if (seller.products_sold[item.sku]) {
+            if (!seller.products_sold[item.sku]) {
                 seller.products_sold[item.sku] = 0
             }
             
